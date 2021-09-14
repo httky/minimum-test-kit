@@ -37,38 +37,24 @@ const copyPlugin = new CopyPlugin({
 plugins.push(copyPlugin)
 plugins.unshift(cleanPlugin)
 
-module.exports = env => {
-  const MODE = env
-  const enabledSourceMap = MODE === "development"
-
-  return {
-    mode: MODE,
-    entry: entries,
-    module: {
-      rules: [
-        {
-          test: /\.css/,
-          use: [
-            "style-loader",
-            {
-              loader: "css-loader",
-              options: {
-                url: false,
-                sourceMap: enabledSourceMap
-              }
+module.exports = {
+  entry: entries,
+  module: {
+    rules: [
+      {
+        test: /\.css/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              url: false,
+              sourceMap: false
             }
-          ]
-        }
-      ]
-    },
-    output: {
-      filename: '[name]',
-      path: path.resolve(__dirname, 'dist')
-    },
-    devServer: {
-      host: '0.0.0.0',
-      contentBase: path.resolve(__dirname, 'dist')
-    },
-    plugins: plugins
-  }
+          }
+        ]
+      }
+    ]
+  },
+  plugins: plugins
 }
