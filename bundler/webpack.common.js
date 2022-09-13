@@ -4,26 +4,26 @@ const HTMLPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-const scriptDir = './src'
-const htmlDir = './src/pages'
+const scriptDir = '../src'
+const htmlDir = '../src/pages'
 const entries = {}
 
 glob.sync('**/*.js', {
   // ignore: '**/_*.js' // 除外したいやつ
-  cwd: scriptDir
-}).map((key) => {
-  entries[key] = path.resolve(scriptDir, key)
+  cwd: path.resolve(__dirname, `${scriptDir}`)
+}).map((fileName) => {
+  entries[`${fileName.replace(/.js$/, '')}`] = path.resolve(__dirname, `${scriptDir}/${fileName}`)
 })
 
 const htmlEntries = glob.sync('**/*.html', {
-  cwd: htmlDir
-}).map((key) => {
+  cwd: path.resolve(__dirname, `${htmlDir}`)
+}).map((fileName) => {
   // optionはここ
   // https://github.com/jantimon/html-webpack-plugin#options
   return new HTMLPlugin({
     inject: false, // 全てのjsを注入しない
-    filename: key,
-    template: path.join(__dirname, `${htmlDir}/${key}`),
+    filename: fileName,
+    template: path.join(__dirname, `${htmlDir}/${fileName}`),
   })
 })
 
@@ -31,11 +31,16 @@ const plugins = htmlEntries
 const cleanPlugin = new CleanWebpackPlugin()
 const copyPlugin = new CopyPlugin({
   patterns: [
-    { from: './src/static', to: path.resolve(__dirname, 'dist') },
+    {
+      from: path.resolve(__dirname, '../src/static'),
+      // to: path.resolve(__dirname, 'dist')
+    },
   ]
 })
 plugins.push(copyPlugin)
 plugins.unshift(cleanPlugin)
+
+console.log(entries)
 
 module.exports = {
   entry: entries,
