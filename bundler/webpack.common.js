@@ -5,12 +5,13 @@ const CopyPlugin = require('copy-webpack-plugin')
 
 const entries = {}
 
+// NOTE: 複数のjsを吐きたい時用
 // js
 glob.sync('**/*.js', {
   // ignore: '**/_*.js' // 除外したいやつ
-  cwd: path.resolve(__dirname, `../src/script`)
+  cwd: path.resolve(__dirname, `../src/script/pages`)
 }).map((fileName) => {
-  entries[`${fileName.replace(/.js$/, '')}`] = path.resolve(__dirname, `../src/script/${fileName}`)
+  entries[`${fileName.replace(/.js$/, '')}`] = path.resolve(__dirname, `../src/script/pages/${fileName}`)
 })
 
 // html
