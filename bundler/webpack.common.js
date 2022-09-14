@@ -3,26 +3,26 @@ const glob = require('glob')
 const HTMLPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
-const scriptDir = '../src/script'
-const htmlDir = '../src/html/pages'
 const entries = {}
 
+// js
 glob.sync('**/*.js', {
   // ignore: '**/_*.js' // 除外したいやつ
-  cwd: path.resolve(__dirname, `${scriptDir}`)
+  cwd: path.resolve(__dirname, `../src/script`)
 }).map((fileName) => {
-  entries[`${fileName.replace(/.js$/, '')}`] = path.resolve(__dirname, `${scriptDir}/${fileName}`)
+  entries[`${fileName.replace(/.js$/, '')}`] = path.resolve(__dirname, `../src/script/${fileName}`)
 })
 
+// html
 const htmlEntries = glob.sync('**/*.html', {
-  cwd: path.resolve(__dirname, `${htmlDir}`)
+  cwd: path.resolve(__dirname, `../src/html/pages`)
 }).map((fileName) => {
   // optionはここ
   // https://github.com/jantimon/html-webpack-plugin#options
   return new HTMLPlugin({
     inject: false, // 全てのjsを注入しない
     filename: fileName,
-    template: path.join(__dirname, `${htmlDir}/${fileName}`),
+    template: path.join(__dirname, `../src/html/pages/${fileName}`),
   })
 })
 
