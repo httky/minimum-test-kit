@@ -3,8 +3,8 @@ const glob = require('glob')
 const HTMLPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
-const scriptDir = '../src'
-const htmlDir = '../src/pages'
+const scriptDir = '../src/script'
+const htmlDir = '../src/html/pages'
 const entries = {}
 
 glob.sync('**/*.js', {
