@@ -2,7 +2,6 @@ const path = require('path')
 const glob = require('glob')
 const HTMLPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const scriptDir = '../src'
 const htmlDir = '../src/pages'
@@ -28,7 +27,6 @@ const htmlEntries = glob.sync('**/*.html', {
 })
 
 const plugins = htmlEntries
-const cleanPlugin = new CleanWebpackPlugin()
 const copyPlugin = new CopyPlugin({
   patterns: [
     {
@@ -38,9 +36,6 @@ const copyPlugin = new CopyPlugin({
   ]
 })
 plugins.push(copyPlugin)
-plugins.unshift(cleanPlugin)
-
-console.log(entries)
 
 module.exports = {
   entry: entries,
